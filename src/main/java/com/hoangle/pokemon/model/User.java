@@ -1,20 +1,18 @@
-package com.hoangle.pokemon.models;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.hoangle.pokemon.model;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class User {
+public class User extends Auditable{
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(unique = true)
   private String username;
 
-  @JsonIgnore
   private  String password;
 
   private int credits;
@@ -25,12 +23,11 @@ public class User {
   public User() {
   }
 
-  public User(String username, String password, int credits) {
+  public User(String username, String password) {
     this.username = username;
     this.password = password;
-    this.credits = credits;
+    this.credits = 10000;
   }
-
 
   public Long getId() {
     return id;

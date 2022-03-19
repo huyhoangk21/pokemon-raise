@@ -1,4 +1,4 @@
-package com.hoangle.pokemon.models;
+package com.hoangle.pokemon.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

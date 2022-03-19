@@ -1,9 +1,9 @@
-package com.hoangle.pokemon.models;
+package com.hoangle.pokemon.model;
 
 import javax.persistence.*;
 
 @Entity
-public class Pokemon {
+public class Pokemon extends Auditable{
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,12 @@ public class Pokemon {
   public Pokemon() {
   }
 
-  public Pokemon(int pokemonId, String name, String image, int level, int experience, User user) {
+  public Pokemon(int pokemonId, String name, String image, User user) {
     this.pokemonId = pokemonId;
     this.name = name;
     this.image = image;
-    this.level = level;
-    this.experience = experience;
+    this.level = 1;
+    this.experience = this.level * 100;
     this.user = user;
   }
 
