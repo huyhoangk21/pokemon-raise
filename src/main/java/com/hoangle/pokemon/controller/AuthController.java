@@ -2,12 +2,11 @@ package com.hoangle.pokemon.controller;
 
 import com.hoangle.pokemon.dto.request.LoginRequest;
 import com.hoangle.pokemon.dto.request.SignupRequest;
-import com.hoangle.pokemon.dto.response.Auth;
+import com.hoangle.pokemon.dto.response.AuthData;
 import com.hoangle.pokemon.dto.response.HttpResponse;
 import com.hoangle.pokemon.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +23,13 @@ public class AuthController {
     this.authService = authService;
   }
 
-  @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/login")
   @ResponseStatus(HttpStatus.OK)
-  public HttpResponse<Auth> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+  public HttpResponse<AuthData> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
     return authService.login(loginRequest, request);
   }
 
-  @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/signup")
   @ResponseStatus(HttpStatus.CREATED)
   public HttpResponse<Void> signup(@Valid @RequestBody SignupRequest signupRequest, HttpServletRequest request) {
     return authService.signup(signupRequest, request);

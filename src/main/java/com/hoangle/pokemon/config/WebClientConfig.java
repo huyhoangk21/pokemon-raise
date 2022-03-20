@@ -29,7 +29,6 @@ public class WebClientConfig {
 
     return WebClient
         .builder()
-        .baseUrl("https://pokeapi.co/api/v2/pokemon")
         .exchangeStrategies(strategies)
         .build();
   }

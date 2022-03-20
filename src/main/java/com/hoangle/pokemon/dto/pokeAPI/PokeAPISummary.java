@@ -1,6 +1,6 @@
-package com.hoangle.pokemon.dto.response;
+package com.hoangle.pokemon.dto.pokeAPI;
 
-public class PokemonShort {
+public class PokeAPISummary {
 
   private int pokemonId;
 
@@ -8,10 +8,10 @@ public class PokemonShort {
 
   private String image;
 
-  public PokemonShort() {
+  public PokeAPISummary() {
   }
 
-  public PokemonShort(int pokemonId, String name, String image) {
+  public PokeAPISummary(int pokemonId, String name, String image) {
     this.pokemonId = pokemonId;
     this.name = name;
     this.image = image;

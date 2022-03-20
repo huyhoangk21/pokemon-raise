@@ -34,7 +34,7 @@ public class AuthEntryPointExceptionHandler implements AuthenticationEntryPoint 
     HttpResponse<Void> httpResponse =
         new HttpResponse<>(request.getRequestURI(),
                            HttpStatus.UNAUTHORIZED,
-                           "Unable to authenticate",
+                           "User is unauthenticated",
                            null);
 
     response.setContentType("application/json");

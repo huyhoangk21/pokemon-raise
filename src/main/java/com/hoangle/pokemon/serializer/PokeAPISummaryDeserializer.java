@@ -5,26 +5,26 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.hoangle.pokemon.dto.response.PokemonShort;
+import com.hoangle.pokemon.dto.pokeAPI.PokeAPISummary;
 
 import java.io.IOException;
 
-public class PokemonShortDeserializer extends StdDeserializer<PokemonShort> {
+public class PokeAPISummaryDeserializer extends StdDeserializer<PokeAPISummary> {
 
-  public PokemonShortDeserializer() {
+  public PokeAPISummaryDeserializer() {
     this(null);
   }
 
-  public PokemonShortDeserializer(Class<?> vc) {
+  public PokeAPISummaryDeserializer(Class<?> vc) {
     super(vc);
   }
 
   @Override
-  public PokemonShort deserialize(JsonParser jsonParser,
-                             DeserializationContext deserializationContext) throws IOException, JacksonException {
+  public PokeAPISummary deserialize(JsonParser jsonParser,
+                                    DeserializationContext deserializationContext) throws IOException, JacksonException {
 
     JsonNode productNode = jsonParser.getCodec().readTree(jsonParser);
-    PokemonShort pokemon = new PokemonShort();
+    PokeAPISummary pokemon = new PokeAPISummary();
 
     pokemon.setPokemonId(productNode.get("id").intValue());
     pokemon.setName(productNode.get("name").textValue());

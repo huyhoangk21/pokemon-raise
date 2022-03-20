@@ -2,9 +2,10 @@ package com.hoangle.pokemon.service;
 
 import com.hoangle.pokemon.dto.request.LoginRequest;
 import com.hoangle.pokemon.dto.request.SignupRequest;
-import com.hoangle.pokemon.dto.response.Auth;
+import com.hoangle.pokemon.dto.response.AuthData;
 import com.hoangle.pokemon.dto.response.HttpResponse;
-import com.hoangle.pokemon.exception.UserAlreadyExistsException;
+import com.hoangle.pokemon.exception.ResourceAlreadyExistsException;
+import com.hoangle.pokemon.model.SecurityUser;
 import com.hoangle.pokemon.model.User;
 import com.hoangle.pokemon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class AuthService {
     String username = signupRequest.getUsername();
     String password = signupRequest.getPassword();
     if (userRepository.existsByUsername(username)) {
-      throw new UserAlreadyExistsException(String.format("User with username %s already existed", username));
+      throw new ResourceAlreadyExistsException(String.format("User with username %s already existed", username));
     }
 
 
@@ -52,11 +53,11 @@ public class AuthService {
 
     return new HttpResponse<>(request.getRequestURI(),
                                   HttpStatus.CREATED,
-                                  "User with username " + username + " created.",
+                                  "User with username " + username + " has been created successfully.",
                                   null);
   }
 
-  public HttpResponse<Auth> login(LoginRequest loginRequest, HttpServletRequest request) {
+  public HttpResponse<AuthData> login(LoginRequest loginRequest, HttpServletRequest request) {
     String username = loginRequest.getUsername();
     String password = loginRequest.getPassword();
 
@@ -65,12 +66,16 @@ public class AuthService {
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
+    SecurityUser user = (SecurityUser) authentication.getPrincipal();
+
     String token = jwtService.generateJwt(authentication);
 
-    return new HttpResponse<Auth>(request.getRequestURI(),
-                                  HttpStatus.OK,
-                                  "User with username " + username + " logged in.",
-                                  new Auth(username, token));
+    return new HttpResponse<AuthData>(request.getRequestURI(),
+                                      HttpStatus.OK,
+                                      "User with username " + username + " has been authenticated successfully.",
+                                      new AuthData(user.getUser().getId(),
+                                                   user.getUsername(),
+                                                   token));
   }
 
 }

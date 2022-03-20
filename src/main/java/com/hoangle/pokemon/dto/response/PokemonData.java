@@ -1,12 +1,9 @@
-package com.hoangle.pokemon.model;
+package com.hoangle.pokemon.dto.response;
 
-import javax.persistence.*;
+import com.hoangle.pokemon.model.Pokemon;
 
-@Entity
-public class Pokemon extends Auditable{
+public class PokemonData {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private int pokemonId;
@@ -19,20 +16,16 @@ public class Pokemon extends Auditable{
 
   private int experience;
 
-  @ManyToOne
-  @JoinColumn(name="user_id", nullable = false)
-  private User user;
-
-  public Pokemon() {
+  public PokemonData() {
   }
 
-  public Pokemon(int pokemonId, String name, String image, int level, int experience, User user) {
-    this.pokemonId = pokemonId;
-    this.name = name;
-    this.image = image;
-    this.level = level;
-    this.experience = experience;
-    this.user = user;
+  public PokemonData(Pokemon pokemon) {
+    this.id = pokemon.getId();
+    this.pokemonId = pokemon.getPokemonId();
+    this.name = pokemon.getName();
+    this.image = pokemon.getImage();
+    this.level = pokemon.getLevel();
+    this.experience = pokemon.getExperience();
   }
 
   public Long getId() {
@@ -81,13 +74,5 @@ public class Pokemon extends Auditable{
 
   public void setExperience(int experience) {
     this.experience = experience;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
   }
 }

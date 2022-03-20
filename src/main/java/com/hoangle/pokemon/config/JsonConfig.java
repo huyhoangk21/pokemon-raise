@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.hoangle.pokemon.dto.response.PokeAPIUrl;
-import com.hoangle.pokemon.dto.response.PokemonShort;
-import com.hoangle.pokemon.serializer.PokeAPIUrlDeserializer;
-import com.hoangle.pokemon.serializer.PokemonShortDeserializer;
+import com.hoangle.pokemon.dto.pokeAPI.PokeAPIUrls;
+import com.hoangle.pokemon.dto.pokeAPI.PokeAPISummary;
+import com.hoangle.pokemon.serializer.PokeAPIUrlsDeserializer;
+import com.hoangle.pokemon.serializer.PokeAPISummaryDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,8 +20,8 @@ public class JsonConfig {
 
     ObjectMapper objectMapper = new ObjectMapper();
     SimpleModule module = new SimpleModule();
-    module.addDeserializer(PokemonShort.class, new PokemonShortDeserializer());
-    module.addDeserializer(PokeAPIUrl.class, new PokeAPIUrlDeserializer());
+    module.addDeserializer(PokeAPISummary.class, new PokeAPISummaryDeserializer());
+    module.addDeserializer(PokeAPIUrls.class, new PokeAPIUrlsDeserializer());
     objectMapper.registerModule(module);
     objectMapper.registerModule(new JavaTimeModule());
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

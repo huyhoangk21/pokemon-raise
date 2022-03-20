@@ -1,17 +1,17 @@
-package com.hoangle.pokemon.dto.response;
+package com.hoangle.pokemon.dto.pokeAPI;
 
 import java.util.List;
 
-public class PokeAPIUrl {
+public class PokeAPIUrls {
 
   private int count;
   private String next;
   private List<String> urls;
 
-  public PokeAPIUrl() {
+  public PokeAPIUrls() {
   }
 
-  public PokeAPIUrl(int count, String next, List<String> urls) {
+  public PokeAPIUrls(int count, String next, List<String> urls) {
     this.count = count;
     this.next = next;
     this.urls = urls;

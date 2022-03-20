@@ -1,7 +1,11 @@
 package com.hoangle.pokemon.controller;
 
+import com.hoangle.pokemon.dto.request.CreatePokemonRequest;
+import com.hoangle.pokemon.dto.request.UpdatePokemonRequest;
 import com.hoangle.pokemon.dto.response.HttpResponse;
-import com.hoangle.pokemon.dto.response.PokemonShort;
+import com.hoangle.pokemon.dto.pokeAPI.PokeAPISummary;
+import com.hoangle.pokemon.dto.response.PokemonData;
+import com.hoangle.pokemon.model.Pokemon;
 import com.hoangle.pokemon.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,32 +24,33 @@ public class PokemonController {
     this.pokemonService = pokemonService;
   }
 
-  @PostMapping(value="/")
+  @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public void createPokemon(@RequestBody PokemonShort pokemonShort, HttpServletRequest request) {
-
+  public HttpResponse<PokemonData> createPokemon(@RequestBody CreatePokemonRequest createPokemonRequest,
+                                                 HttpServletRequest request) {
+    return pokemonService.createPokemon(createPokemonRequest, request);
   }
 
   @PutMapping(value="/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void updatePokemon(@RequestBody PokemonShort pokemonShort,
-                            @PathVariable Long id,
-                            HttpServletRequest request) {
+  public HttpResponse<PokemonData> updatePokemonExperience(
+                                                 @PathVariable Long id,
+                                                 HttpServletRequest request) {
 
+    return pokemonService.updatePokemonExperience( id, request);
   }
 
   @DeleteMapping(value="/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deletePokemon(@RequestBody PokemonShort pokemonShort,
-                            @PathVariable Long id,
-                            HttpServletRequest request) {
-
+  public HttpResponse<Void> deletePokemon(@PathVariable Long id,
+                                          HttpServletRequest request) {
+    return pokemonService.deletePokemon(id, request);
   }
 
 
   @GetMapping(value="/random")
   @ResponseStatus(HttpStatus.OK)
-  public HttpResponse<PokemonShort> getRandom(HttpServletRequest request) {
+  public HttpResponse<PokeAPISummary> getRandom(HttpServletRequest request) {
     return pokemonService.getRandom(request);
   }
 

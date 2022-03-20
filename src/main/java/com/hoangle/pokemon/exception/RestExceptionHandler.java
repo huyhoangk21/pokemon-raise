@@ -40,14 +40,42 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     return handleExceptionInternal(ex, httpResponse, headers, httpResponse.getStatus(), request);
   }
 
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler(UserAlreadyExistsException.class)
-  protected HttpResponse<Void> handleUsernameAlreadyExists(UserAlreadyExistsException ex, HttpServletRequest request) {
+  @ResponseStatus(HttpStatus.CONFLICT)
+  @ExceptionHandler(ResourceAlreadyExistsException.class)
+  protected HttpResponse<Void> handleConflict(Exception ex, HttpServletRequest request) {
 
    return new HttpResponse<>(request.getRequestURI(),
-                             HttpStatus.BAD_REQUEST,
+                             HttpStatus.CONFLICT,
                              ex.getMessage(),
                              null);
 
+  }
+
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ExceptionHandler(PokeAPIException.class)
+  protected HttpResponse<Void> handleInternalServerError(Exception ex, HttpServletRequest request) {
+
+    return new HttpResponse<>(request.getRequestURI(),
+                              HttpStatus.INTERNAL_SERVER_ERROR,
+                              ex.getMessage(),
+                              null);
+  }
+
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ExceptionHandler(ResourceNotFoundException.class)
+  protected HttpResponse<Void> handleNotFound(Exception ex, HttpServletRequest request) {
+    return new HttpResponse<>(request.getRequestURI(),
+                              HttpStatus.NOT_FOUND,
+                              ex.getMessage(),
+                              null);
+  }
+
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  @ExceptionHandler(ForbiddenActionException.class)
+  protected HttpResponse<Void> handleForbidden(Exception ex, HttpServletRequest request) {
+    return new HttpResponse<>(request.getRequestURI(),
+                              HttpStatus.FORBIDDEN,
+                              ex.getMessage(),
+                              null);
   }
 }

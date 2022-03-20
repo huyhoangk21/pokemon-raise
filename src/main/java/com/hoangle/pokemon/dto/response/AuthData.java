@@ -1,17 +1,28 @@
 package com.hoangle.pokemon.dto.response;
 
-public class Auth {
+public class AuthData {
+
+  private Long id;
 
   private String username;
 
   private String token;
 
-  public Auth() {
+  public AuthData() {
   }
 
-  public Auth(String username, String token) {
+  public AuthData(Long id, String username, String token) {
+    this.id = id;
     this.username = username;
     this.token = token;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getUsername() {
@@ -29,4 +40,6 @@ public class Auth {
   public void setToken(String token) {
     this.token = token;
   }
+
+
 }

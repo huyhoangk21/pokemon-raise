@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 
@@ -35,10 +36,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       if (token != null && jwtService.isJwtValid(token)) {
         String username = jwtService.getUsernameFromJwt(token);
         UserDetails user = securityUserService.loadUserByUsername(username);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user,
+                                                                                null,
+                                                                                Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
-
     } catch (Exception e) {
       logger.error("Cannot set authentication {}", e);
     }
@@ -47,7 +49,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
   private String parseJwt(HttpServletRequest request) {
     String authHeader = request.getHeader("Authorization");
-    if (StringUtils.hasText(authHeader) && authHeader.startsWith(jwtService.getPrefix())) {
+    if (StringUtils.hasText(authHeader) && authHeader.startsWith(jwtService.getPrefix() + " ")) {
       return authHeader.substring(7, authHeader.length());
     }
     return null;
