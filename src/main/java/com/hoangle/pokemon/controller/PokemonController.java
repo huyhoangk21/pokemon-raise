@@ -31,13 +31,13 @@ public class PokemonController {
     return pokemonService.createPokemon(createPokemonRequest, request);
   }
 
-  @PutMapping(value="/{id}")
+  @PostMapping(value="/{id}/experience")
   @ResponseStatus(HttpStatus.OK)
-  public HttpResponse<PokemonData> updatePokemonExperience(
-                                                 @PathVariable Long id,
-                                                 HttpServletRequest request) {
+  public HttpResponse<PokemonData> updatePokemonExperience(@RequestBody UpdatePokemonRequest updatePokemonRequest,
+                                                           @PathVariable Long id,
+                                                           HttpServletRequest request) {
 
-    return pokemonService.updatePokemonExperience( id, request);
+    return pokemonService.updatePokemonExperience( updatePokemonRequest, id, request);
   }
 
   @DeleteMapping(value="/{id}")
@@ -46,7 +46,6 @@ public class PokemonController {
                                           HttpServletRequest request) {
     return pokemonService.deletePokemon(id, request);
   }
-
 
   @GetMapping(value="/random")
   @ResponseStatus(HttpStatus.OK)

@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@Transactional
 public class PokemonService {
 
   private final WebClient webClient;
@@ -93,8 +95,9 @@ public class PokemonService {
                               null);
   }
 
-  public HttpResponse<PokemonData> updatePokemonExperience(Long id,
-                                                 HttpServletRequest request) {
+  public HttpResponse<PokemonData> updatePokemonExperience(UpdatePokemonRequest updatePokemonRequest,
+                                                           Long id,
+                                                           HttpServletRequest request) {
     Pokemon pokemon = pokemonRepository
         .findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Pokemon with id " + id + " does not exist."));
@@ -107,14 +110,8 @@ public class PokemonService {
                                              + " is unauthorized to perform the request.");
     }
 
-    int newExperience = Math.max(pokemon.getExperience() - 50, 0);
-    pokemon.setExperience(newExperience);
-
-    if (pokemon.getExperience() == 0) {
-      int nextLevel = pokemon.getLevel() + 1;
-      pokemon.setLevel(nextLevel);
-      pokemon.setExperience(nextLevel * 100);
-    }
+    pokemon.setLevel(updatePokemonRequest.getLevel());
+    pokemon.setExperience(updatePokemonRequest.getExperience());
 
     pokemonRepository.save(pokemon);
 
